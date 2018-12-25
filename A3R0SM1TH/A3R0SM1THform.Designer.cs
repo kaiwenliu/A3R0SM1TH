@@ -118,10 +118,10 @@
 			// 
 			this.errorLabel.AutoSize = true;
 			this.errorLabel.BackColor = System.Drawing.Color.Silver;
-			this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.errorLabel.Location = new System.Drawing.Point(46, 396);
+			this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 4.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.errorLabel.Location = new System.Drawing.Point(12, 392);
 			this.errorLabel.Name = "errorLabel";
-			this.errorLabel.Size = new System.Drawing.Size(0, 16);
+			this.errorLabel.Size = new System.Drawing.Size(0, 12);
 			this.errorLabel.TabIndex = 7;
 			// 
 			// A3R0SM1THform
