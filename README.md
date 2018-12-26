@@ -1,5 +1,5 @@
 # A3R0SM1TH
-💾 A File Dropper that downloads and executes a .NET executable **completely** in memory. I have yet to add other features to this, but I probably won't because this could be utilized maliciously
+💾 A File Dropper that downloads and executes a .NET executable **completely** in memory. I have yet to add other features to this, but I probably won't because this could be utilized maliciously. I mainly made this as a proof of concept.
 
 # Disclaimer
 This repository is for research purposes only, the use of this code is your responsibility.
