@@ -1,5 +1,5 @@
 # A3R0SM1TH
-💾 An incredibly lightweight file dropper that downloads and executes a .NET executable (given by a link specified by the user) **completely** in memory. I have yet to add other features to this, but I probably won't because this could be utilized maliciously. I mainly made this as a proof of concept.
+💾 An incredibly lightweight file dropper that downloads and executes a .NET executable (given by a link specified by the user) **completely** in memory. I have yet to add other features to this, but I probably won't because this could be utilized maliciously. I mainly made this as a proof of concept, and so that if others want to implement downloading + running executables in memory, they can use this repositry as a reference.
 
 # Disclaimer
 This repository is for research purposes only, the use of this code is your responsibility.
